@@ -37,16 +37,20 @@ limitations under the License.
 </div>
 <div id="gamelist">
   <h2>GAMES</h2>
-  <table>
+<!--  <table>
     <tr>
       <td>Map</td>
       <td>Players</td>
       <td>Active Player</td>
       <td>Play/View</td>
-    </tr>
+    </tr>-->
     <!-- TODO: do we want to have all this object knowledge here? -->
-    {% for game in games %}
-    <tr>
+    <ul>
+    {% for game in games.all %}
+      <li>{{game}}</li>
+    {% empty %}
+      No tags!
+<!--    <tr>
       <td>{{ game.mapname }}</td>
       <td>
 	{% for player in game.players %}
@@ -55,9 +59,10 @@ limitations under the License.
       </td>
       <td>{{ game.state.active_player }}</td>
       <td><a href="/play/{{game.idhash}}">Play a turn</a></td>
-    </tr>
+    </tr>-->
     {% endfor %}
-  </table>
+</ul>
+<!--  </table>-->
 </div>
 </body>
 </html>
