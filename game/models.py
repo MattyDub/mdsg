@@ -11,7 +11,7 @@ class Game(models.Model):
     name = models.CharField(max_length=50, default='MSG')
     mapname = models.CharField(max_length=20)
     players = models.ManyToManyField(User)
-    active_player = models.ForeignKey(User)
+    active_player = models.ForeignKey(User, related_name='active')
     turn = models.IntegerField(default=1)
     units = models.ManyToManyField(Unit)
     joined = models.BooleanField()
