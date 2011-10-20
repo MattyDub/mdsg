@@ -14,8 +14,8 @@ logger = logging.getLogger(__name__)
 
 @login_required
 def main_view(request):
-    #games = Game.objects.filter(players__contains(request.user))
-    return render_to_response('index.html', {'username':request.user.username, 'games':[]},
+    games = Game.objects.filter(players__id=request.user.id)
+    return render_to_response('index.html', {'username':request.user.username, 'games':games},
                               context_instance=RequestContext(request))
 
 #TODO:
