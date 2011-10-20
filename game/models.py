@@ -18,3 +18,6 @@ class Game(models.Model):
     state = models.ForeignKey(GameState)
     joined = models.BooleanField()
     completed = models.BooleanField()
+
+    def __unicode__(self):
+        return 'Game #' + str(self.id)
