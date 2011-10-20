@@ -1,0 +1,8 @@
+<div id="newgame">
+  <form action="/startgame" method="post">
+  {% csrf_token %}
+  <label for="address">Opponent's address:</label>
+  <input name="address" type="text"/><br/>
+  <input type="submit" value="Invite opponent"/>
+  </form>
+</div>
