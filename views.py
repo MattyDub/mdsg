@@ -9,14 +9,16 @@ from django.template import RequestContext
 import logging
 
 #list of game-specific modules to import
-import game
+import msg
 
 logger = logging.getLogger(__name__)
+
+ALL_GAMES=(msg,)
 
 @login_required
 def main_view(request):
     games = []
-    games.extend(game.models.listgames(request.user))
+    games.extend(msg.models.listgames(request.user))
     return render_to_response('index.html', {'username':request.user.username, 'games':games},
                               context_instance=RequestContext(request))
 
@@ -35,3 +37,7 @@ def register(request):
                               {'form': form},
                               context_instance=RequestContext(request)
                               )
+
+class NewGameForm(forms.Form):
+    #name = forms.ChoiceField(choices=
+    pass

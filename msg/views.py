@@ -1,4 +1,5 @@
 from models import Game
+
 #TODO:
 #new plan: registration is distinct from game creation. All game creation is done on a single page, and only by registered users
 def startgame(request):
