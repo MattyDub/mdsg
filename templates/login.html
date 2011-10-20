@@ -1,0 +1,17 @@
+
+{% block content %}
+    {% if form.errors %}
+        <p class="error">Sorry, that's incorrect.</p>
+    {% endif %}
+    <form action="/accounts/login/" method="post">
+        {% csrf_token %}
+        <label for="username">User name:</label>
+        <input type="text" name="username" value="" id="username">
+        <label for="password">Password:</label>
+        <input type="password" name="password" value="" id="password">
+        <input type="submit" value="login">
+        <!-- TODO: do we need this in a template parameter, like it was in the book? -->
+        <!-- <input type="hidden" name="next" value="{{ index.html|escape }}"> -->
+        <input type="hidden" name="next" value="/">
+    </form>
+{% endblock %}
