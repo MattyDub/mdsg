@@ -13,6 +13,7 @@ class GameState(models.Model):
     units = models.ManyToManyField(Unit)
 
 class Game(models.Model):
+    name = models.CharField(max_length=50, default='MSG')
     mapname = models.CharField(max_length=20)
     players = models.ManyToManyField(User)
     state = models.ForeignKey(GameState)
@@ -20,4 +21,7 @@ class Game(models.Model):
     completed = models.BooleanField()
 
     def __unicode__(self):
-        return 'Game #' + str(self.id)
+        return self.name + ' Game #' + str(self.id)
+
+def listgames(user):
+    return Game.objects.filter(players__id=user.id)
