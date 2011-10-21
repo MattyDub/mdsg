@@ -1,23 +1,28 @@
 from models import Game
+from django import forms
+from django.contrib.auth.models import User
+from django.template import RequestContext
+from django.shortcuts import render_to_response
+from django.contrib.auth.decorators import login_required
 
-#TODO:
-#new plan: registration is distinct from game creation. All game creation is done on a single page, and only by registered users
-def startgame(request):
+@login_required
+def newgame(request):
     if request.method == 'POST':
-        #TODO: DANGER NOT SANITIZED!
-        address = self.request.get("address")
-        logger.info('Trying to start game with email address: ' + address)
-        if request.user:
-            gs = game.init_game_state(request.user)
-            game = Game(mapname='basic',joined=False,completed=False, state=gs)
-            game.save()
-            game.users.add(request.user)
-        ## send_mail(subject="You're invited to play MSG!",
-        ##           message="You've been invited ")
+        form = NewGameForm(request.POST)
+        if form.is_valid():
+            g = Game(mapname='map',joined=False, completed=False,
+                     active_player=request.user)
+            g.save()
+            g.players.add(request.user)
+            g.save()
         else:
-            pass #need to redirect? blow up?
-        # TODO: make idempotent
-        return HttpResponseRedirect('/')
+            pass #TODO
     else:
-        pass #TODO?
+        return render_to_response('newgame.html',
+                                  context_instance=RequestContext(request))
 
+class NewGameForm(forms.Form):
+    mapname = forms.ChoiceField(choices=[('foomap','foomap'),
+                                          ('barmap','barmap')])
+    users = User.objects.all()
+    players = forms.MultipleChoiceField(choices = [(unicode(u),unicode(u)) for u in users])
