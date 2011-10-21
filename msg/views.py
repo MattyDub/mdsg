@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from models import Game
 from django import forms
 from django.contrib.auth.models import User
@@ -21,6 +22,7 @@ def newgame(request):
             g.save()
             g.players.add(request.user)
             g.save()
+            return HttpResponseRedirect("/")
         else:
             pass #TODO
     else:
