@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+GAMENAME='MSG'
+
 class Unit(models.Model):
     player = models.ForeignKey(User)
     xpos = models.IntegerField()
@@ -8,7 +10,7 @@ class Unit(models.Model):
     unit_type = models.CharField(max_length=30) # or do we want this in another table?
 
 class Game(models.Model):
-    name = models.CharField(max_length=50, default='MSG')
+    name = models.CharField(max_length=50, default=GAMENAME)
     mapname = models.CharField(max_length=20)
     players = models.ManyToManyField(User)
     active_player = models.ForeignKey(User, related_name='active')
