@@ -35,9 +35,14 @@ def register(request):
         form = UserCreationForm()
     return render_to_response("registration/register.html",
                               {'form': form},
-                              context_instance=RequestContext(request)
-                              )
+                              context_instance=RequestContext(request))
+
+@login_required
+def newgame(request):
+    form = NewGameForm()
+    return render_to_response("newgame.html",
+                              {'form': form},
+                              context_instance=RequestContext(request))
 
 class NewGameForm(forms.Form):
-    #name = forms.ChoiceField(choices=
-    pass
+    gamechoice = forms.ChoiceField(choices=[g.NEWGAME_TUPLE for g in ALL_GAMES])
