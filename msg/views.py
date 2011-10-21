@@ -5,6 +5,12 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
 
+class NewGameForm(forms.Form):
+    mapname = forms.ChoiceField(choices=[('foomap','foomap'),
+                                          ('barmap','barmap')])
+    users = User.objects.all()
+    players = forms.MultipleChoiceField(choices = [(unicode(u),unicode(u)) for u in users])
+
 @login_required
 def newgame(request):
     if request.method == 'POST':
@@ -18,11 +24,10 @@ def newgame(request):
         else:
             pass #TODO
     else:
-        return render_to_response('newgame.html',
-                                  context_instance=RequestContext(request))
+        form = NewGameForm()
+    return render_to_response('newmsggame.html',
+                              {'form': form},
+                              context_instance=RequestContext(request))
 
-class NewGameForm(forms.Form):
-    mapname = forms.ChoiceField(choices=[('foomap','foomap'),
-                                          ('barmap','barmap')])
-    users = User.objects.all()
-    players = forms.MultipleChoiceField(choices = [(unicode(u),unicode(u)) for u in users])
+NEWGAME=newgame
+
