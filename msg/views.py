@@ -29,5 +29,5 @@ def newgame(request):
                               {'form': form},
                               context_instance=RequestContext(request))
 
-NEWGAME=newgame
+NEWGAME='/msg/newgame/'
 
