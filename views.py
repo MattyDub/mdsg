@@ -45,4 +45,6 @@ def newgame(request):
                               context_instance=RequestContext(request))
 
 class NewGameForm(forms.Form):
-    gamechoice = forms.ChoiceField(choices=[g.NEWGAME_TUPLE for g in ALL_GAMES])
+    opts = [('','Please make a selection...')]
+    opts.extend([g.NEWGAME_TUPLE for g in ALL_GAMES])
+    gamechoice = forms.ChoiceField(choices=opts)
