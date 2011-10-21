@@ -11,6 +11,8 @@
 <script type="text/javascript">
 $(document).ready(function() {
   $('#id_gamechoice').change(function() {
-    $('div#innernewgame').load($(this).val());
+    if ($(this).val() !== '') { //don't load the div if the user chooses the first element
+      $('div#innernewgame').load($(this).val());
+    }
   });
 });</script>
