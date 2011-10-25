@@ -23,5 +23,8 @@ class Game(models.Model):
     def __unicode__(self):
         return self.name + ' Game #' + str(self.id)
 
-def listgames(user):
+def active_games(user):
     return Game.objects.filter(players__id=user.id)
+
+def invites(user):
+    return Game.objects.filter(invited_players__id=user.id)

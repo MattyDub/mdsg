@@ -18,8 +18,10 @@ ALL_GAMES=(msg,)
 @login_required
 def main_view(request):
     games = []
-    games.extend(msg.models.listgames(request.user))
-    return render_to_response('index.html', {'username':request.user.username, 'games':games},
+    games.extend(msg.models.active_games(request.user))
+    invites = []
+    invites.extend(msg.models.invites(request.user))
+    return render_to_response('index.html', {'username':request.user.username, 'games':games, 'invites':invites},
                               context_instance=RequestContext(request))
 
 def register(request):
