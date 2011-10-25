@@ -28,7 +28,7 @@ limitations under the License.
   <a href="accounts/logout">logout</a>
 </div>
 <div id="gamelist">
-  <h2>GAMES</h2>
+  <h2>ACTIVE GAMES</h2>
 <!--  <table>
     <tr>
       <td>Map</td>
@@ -55,6 +55,14 @@ limitations under the License.
     {% endfor %}
 </ul>
 <!--  </table>-->
+</div>
+<div id="invites">
+    <h2>invitations</h2>
+    {% for invite in invites %}
+      <li>{{invite}}</li>
+    {% empty %}
+      No invitations!
+    {% endfor %}
 </div>
 <div id="newgame">
   <a href="newgame">Start a new game</a>
