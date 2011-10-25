@@ -9,24 +9,33 @@ from django.contrib.auth.decorators import login_required
 class NewGameForm(forms.Form):
     mapname = forms.ChoiceField(choices=[('foomap','foomap'),
                                           ('barmap','barmap')])
-    users = User.objects.all()
-    players = forms.MultipleChoiceField(choices = [(unicode(u),unicode(u)) for u in users])
+    players = forms.MultipleChoiceField()
+
+    def __init__(self, *args, **kwargs):
+        exclude_user = kwargs.pop('exclude_user')
+        super(NewGameForm ,self).__init__(*args, **kwargs)
+        self.fields['players'].choices = [(unicode(u),unicode(u)) for u in User.objects.exclude(id=exclude_user)]
 
 @login_required
 def newgame(request):
     if request.method == 'POST':
-        form = NewGameForm(request.POST)
+        form = NewGameForm(request.POST, exclude_user=request.user.id)
         if form.is_valid():
-            g = Game(mapname='map',joined=False, completed=False,
+            cd = form.cleaned_data
+            print cd['players']
+            g = Game(mapname = cd['mapname'],
+                     joined=False, completed=False,
                      active_player=request.user)
             g.save()
             g.players.add(request.user)
+            for u in User.objects.filter(username__in=cd['players']):
+                g.invited_players.add(u)
             g.save()
             return HttpResponseRedirect("/")
         else:
             pass #TODO
     else:
-        form = NewGameForm()
+        form = NewGameForm(exclude_user=request.user.id)
     return render_to_response('newmsggame.html',
                               {'form': form},
                               context_instance=RequestContext(request))
