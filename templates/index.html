@@ -59,7 +59,7 @@ limitations under the License.
 <div id="invites">
     <h2>invitations</h2>
     {% for invite in invites %}
-      <li>{{invite}}</li>
+      <li><a href="/{{invite.name}}/joingame/{{invite.id}}">{{invite}}</a></li>
     {% empty %}
       No invitations!
     {% endfor %}

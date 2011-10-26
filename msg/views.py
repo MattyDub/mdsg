@@ -5,6 +5,9 @@ from django.contrib.auth.models import User
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
+import logging
+
+logger = logging.getLogger(__name__)
 
 class NewGameForm(forms.Form):
     mapname = forms.ChoiceField(choices=[('foomap','foomap'),
@@ -40,5 +43,16 @@ def newgame(request):
                               {'form': form},
                               context_instance=RequestContext(request))
 
-NEWGAME='/msg/newgame/'
+@login_required
+def joingame(request, game_id):
+    logger.info("User " + request.user.username + " trying to join game " + game_id)
+    game = Game.objects.filter(id=game_id)
+    #TODO: pick up here
+    if request.user in game.invited_players:
+        game.players.add(request.user)
+        game.invited_players.remove(request.user)
+    else:
+        pass #TODO: trying to join a game uninvited
+
+NEWGAME='/MSG/newgame/'
 
