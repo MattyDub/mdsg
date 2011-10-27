@@ -19,9 +19,13 @@ ALL_GAMES=(msg,)
 def main_view(request):
     games = []
     games.extend(msg.models.active_games(request.user))
+    waiting = []
+    waiting.extend(msg.models.waiting_games(request.user))
     invites = []
     invites.extend(msg.models.invites(request.user))
-    return render_to_response('index.html', {'username':request.user.username, 'games':games, 'invites':invites},
+    return render_to_response('index.html', {'username':request.user.username,
+                                             'games':games, 'waiting':waiting,
+                                             'invites': invites},
                               context_instance=RequestContext(request))
 
 def register(request):

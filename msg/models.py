@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 from django.contrib.auth.models import User
 
 GAMENAME='MSG'
@@ -24,7 +25,11 @@ class Game(models.Model):
         return self.name + ' Game #' + str(self.id)
 
 def active_games(user):
-    return Game.objects.filter(players__id=user.id)
+    return Game.objects.filter(players__id=user.id, joined=True)
+
+def waiting_games(user):
+    waits = Game.objects.filter(players__id=user.id, joined=False)
+    return [(unicode(w), ','.join([p.username for p in w.invited_players.all()])) for w in waits]
 
 def invites(user):
     return Game.objects.filter(invited_players__id=user.id)

@@ -56,8 +56,16 @@ limitations under the License.
 </ul>
 <!--  </table>-->
 </div>
+<div id="waiting">
+    <h2>Games waiting for other players</h2>
+    {% for wait in waiting %}
+      <li>{{wait.0}}: waiting on {{wait.1}}</li>
+    {% empty %}
+      No games waiting!
+    {% endfor %}
+</div>
 <div id="invites">
-    <h2>invitations</h2>
+    <h2>Invitations</h2>
     {% for invite in invites %}
       <li><a href="/{{invite.name}}/joingame/{{invite.id}}">{{invite}}</a></li>
     {% empty %}
