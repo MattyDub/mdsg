@@ -138,13 +138,36 @@ ACCOUNT_ACTIVATION_DAYS = 7
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
     'handlers': {
+        'console': {
+            'level':'INFO',
+            'class':'logging.StreamHandler',
+            'formatter':'simple'
+         },
         'mail_admins': {
             'level': 'ERROR',
             'class': 'django.utils.log.AdminEmailHandler'
         }
     },
     'loggers': {
+        'djmsg': {
+            'handlers':['console'],
+            'level':'INFO',
+            'propagate': True,
+         },
+        'msg': {
+            'handlers':['console'],
+            'level':'INFO',
+            'propagate': True,
+         },
         'django.request': {
             'handlers': ['mail_admins'],
             'level': 'ERROR',
