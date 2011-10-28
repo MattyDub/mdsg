@@ -46,13 +46,14 @@ def newgame(request):
 @login_required
 def joingame(request, game_id):
     logger.info("User " + request.user.username + " trying to join game " + game_id)
-    game = Game.objects.filter(id=game_id)
-    #TODO: pick up here
-    if request.user in game.invited_players:
+    game = Game.objects.get(id=game_id)
+    if request.user in game.invited_players.all():
         game.players.add(request.user)
         game.invited_players.remove(request.user)
+        #TODO: if this was the last invited player, then make the game active...
+        return HttpResponseRedirect("/")
     else:
-        pass #TODO: trying to join a game uninvited
+        return render_to_response('unauthorized.html')
 
 NEWGAME='/MSG/newgame/'
 
