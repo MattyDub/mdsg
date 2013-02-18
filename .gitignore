@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 *pyc
 *~
 *#
 dbfile
 manage.py
+=======
+*.log
+*.pot
+*.pyc
+local_settings.py
+>>>>>>> 464119e08514401e4155a48503a005fffa8f7b86
